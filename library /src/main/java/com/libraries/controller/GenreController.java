@@ -1,5 +1,6 @@
 package com.libraries.controller;
 
+import com.libraries.model.BookModel;
 import com.libraries.model.GenreModel;
 import com.libraries.service.GenreService;
 import org.ietf.jgss.GSSName;
@@ -39,6 +40,11 @@ public class GenreController {
     @DeleteMapping(path = "/genres/{genreId}/") // => http://localhost:9096/api/genres/{genreId}/
     public Optional<GenreModel> deleteGenre(@PathVariable(value = "genreId") Long genreId){
         return genreService.deleteGenre(genreId);
+    }
+
+    @GetMapping(path = "/genres/{genreId}/books/")
+    public List<BookModel> getGenreBooks(@PathVariable(value = "genreId") Long genreId){
+        return genreService.getGenreBooks(genreId);
     }
 
 
