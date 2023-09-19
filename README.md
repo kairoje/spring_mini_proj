@@ -1,6 +1,12 @@
 # Library App (Spring Mini Project)
 Mini project from Interapt Immersive Bootcamp with Spring framework.
 
+## Technologies Used:
+IntelliJ
+Spring Initalizer
+Postman
+
+
 ## ERD 
 ![ERD for Library App](image.png)
 
