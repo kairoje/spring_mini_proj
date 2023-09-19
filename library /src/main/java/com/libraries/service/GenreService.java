@@ -1,5 +1,6 @@
 package com.libraries.service;
 
+import com.libraries.exceptions.InformationNotFoundException;
 import com.libraries.model.GenreModel;
 import com.libraries.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class GenreService {
     }
 
     public List<GenreModel> getGenres(){
-        return genreRepository.findAll();
+        List<GenreModel> genreList = genreRepository.findAll();
+        if (genreList.isEmpty()){
+            throw new InformationNotFoundException("Genre not found.");
+        } else {
+            return genreRepository.findAll();
+        }
     }
 }
