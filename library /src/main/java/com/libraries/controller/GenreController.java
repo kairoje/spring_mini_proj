@@ -21,7 +21,7 @@ public class GenreController {
     @GetMapping(path = "/genres/") // => http://localhost:9096/api/genres/
     public List<GenreModel> getGenres() { return genreService.getGenres(); }
 
-    @GetMapping(path = "/genres/{genreId}/") // => http://localhost:9096/api/genres/1/
+    @GetMapping(path = "/genres/{genreId}/") // => http://localhost:9096/api/genres/{genreId}/
     public Optional<GenreModel> getGenre(@PathVariable(value = "genreId") Long genreId){
         return genreService.getGenre(genreId);
     }
@@ -31,8 +31,15 @@ public class GenreController {
         return genreService.createGenre(genreObject);
     }
 
-    @PutMapping(path = "/genres/{genreId}/")
+    @PutMapping(path = "/genres/{genreId}/") // => http://localhost:9096/api/genres/{genreId}/
     public GenreModel updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody GenreModel genre){
         return genreService.updateGenre(genreId, genre);
     }
+
+    @DeleteMapping(path = "/genres/{genreId}/") // => http://localhost:9096/api/genres/{genreId}/
+    public Optional<GenreModel> deleteGenre(@PathVariable(value = "genreId") Long genreId){
+        return genreService.deleteGenre(genreId);
+    }
+
+
 }
