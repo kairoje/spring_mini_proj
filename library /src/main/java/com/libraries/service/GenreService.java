@@ -36,4 +36,13 @@ public class GenreService {
             return Optional.of(genre);
         }
     }
+
+    public GenreModel createGenre(GenreModel genreObject) {
+        GenreModel genre = genreRepository.findByName(genreObject.getName());
+        if(genre != null){
+            throw new InformationExistsException("Genre with name " + genreObject.getName() + " already exists.");
+        } else {
+            return genreRepository.save(genreObject);
+        }
+    }
 }
