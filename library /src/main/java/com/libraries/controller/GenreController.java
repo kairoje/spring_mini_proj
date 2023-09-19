@@ -31,4 +31,8 @@ public class GenreController {
         return genreService.createGenre(genreObject);
     }
 
+    @PutMapping(path = "/genres/{genreId}/")
+    public GenreModel updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody GenreModel genre){
+        return genreService.updateGenre(genreId, genre);
+    }
 }
