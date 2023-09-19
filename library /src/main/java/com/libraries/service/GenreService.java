@@ -58,4 +58,14 @@ public class GenreService {
             return genreRepository.save(updateGenre);
         }
     }
+
+    public Optional<GenreModel> deleteGenre(Long genreId) {
+        GenreModel genre = genreRepository.findById(genreId);
+        if(genre != null){
+            genreRepository.deleteById(String.valueOf(genreId));
+            return Optional.of(genre);
+        } else {
+            throw new InformationNotFoundException("Genre with id " + genreId + " not found.");
+        }
+    }
 }
