@@ -6,6 +6,7 @@ import com.libraries.service.GenreService;
 import org.ietf.jgss.GSSName;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,22 +43,27 @@ public class GenreController {
         return genreService.deleteGenre(genreId);
     }
 
-    @GetMapping(path = "/genres/{genreId}/books/")
+    @PostMapping(path = "/genres/{genreId}/books/")
+    public BookModel createGenreBook(@PathVariable(value = "genreId") Long genreId, @RequestBody BookModel bookObject){
+        return genreService.createGenreBook(genreId, bookObject);
+    }
+
+    @GetMapping(path = "/genres/{genreId}/books/") // => http://localhost:9096/api/genres/{genreId}/books/
     public List<BookModel> getGenreBooks(@PathVariable(value = "genreId") Long genreId){
         return genreService.getGenreBooks(genreId);
     }
 
-    @GetMapping(path = "/genres/{genreId}/books/{bookId}")
+    @GetMapping(path = "/genres/{genreId}/books/{bookId}") // => http://localhost:9096/api/genres/{genreId}/books/{booksId}/
     public BookModel getGenreBook(@PathVariable(value = "genreId") Long genreId, @PathVariable(value = "bookId") Long bookId){
         return genreService.getGenreBook(genreId, bookId);
     }
 
-    @PutMapping(path = "/genres/{genreId}/books/{bookId}")
+    @PutMapping(path = "/genres/{genreId}/books/{bookId}") // => http://localhost:9096/api/genres/{genreId}/books/{booksId}/
     public BookModel updateGenreBook(@PathVariable(value = "genreId") Long genreId, @PathVariable(value = "bookId") Long bookId, @RequestBody BookModel bookRequest){
         return genreService.updateGenreBook(genreId, bookId, bookRequest);
     }
 
-    @DeleteMapping(path = "/genres/{genreId}/books/{bookId}")
+    @DeleteMapping(path = "/genres/{genreId}/books/{bookId}") // => http://localhost:9096/api/genres/{genreId}/books/{booksId}/
     public Optional<BookModel> deleteGenreBook(@PathVariable(value = "genreId") Long genreId, @PathVariable(value = "bookId") Long bookId){
         return genreService.deleteGenre(genreId, bookId);
     }
