@@ -2,6 +2,7 @@ package com.libraries.service;
 
 import com.libraries.exceptions.InformationExistException;
 import com.libraries.exceptions.InformationNotFoundException;
+import com.libraries.model.BookModel;
 import com.libraries.model.GenreModel;
 import com.libraries.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,15 @@ public class GenreService {
             return Optional.of(genre);
         } else {
             throw new InformationNotFoundException("Genre with id " + genreId + " not found.");
+        }
+    }
+
+    public List<BookModel> getGenreBooks(Long genreId) {
+        Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
+        if(genreOptional.isPresent()){
+            return genreOptional.get().getBookList();
+        } else {
+            throw new InformationNotFoundException("Genre with id " + genreId + " not found");
         }
     }
 }
