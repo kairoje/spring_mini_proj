@@ -46,4 +46,16 @@ public class GenreService {
             return genreRepository.save(genreObject);
         }
     }
+
+    public GenreModel updateGenre(Long genreId, GenreModel genreObject) {
+        GenreModel genre = genreRepository.findById(genreId);
+        if(genre == null){
+            throw new InformationNotFoundException("Genre not found");
+        } else {
+            GenreModel updateGenre = genreRepository.findById(genreId);
+            updateGenre.setName(genreObject.getName());
+            updateGenre.setDescription(genreObject.getDescription());
+            return genreRepository.save(updateGenre);
+        }
+    }
 }
