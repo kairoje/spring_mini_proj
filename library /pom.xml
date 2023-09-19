@@ -50,7 +50,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>1.18.22</version> <!-- Use the latest version available -->
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -64,6 +65,13 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 
 	</dependencies>
 
