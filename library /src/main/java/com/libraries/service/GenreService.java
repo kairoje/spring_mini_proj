@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GenreService {
@@ -21,9 +22,18 @@ public class GenreService {
     public List<GenreModel> getGenres(){
         List<GenreModel> genreList = genreRepository.findAll();
         if (genreList.isEmpty()){
-            throw new InformationNotFoundException("Genre not found.");
+            throw new InformationNotFoundException("No genres found.");
         } else {
             return genreRepository.findAll();
+        }
+    }
+
+    public Optional<GenreModel> getGenre(Long genreId){
+        GenreModel genre = GenreRepository.findById(genreId);
+        if(genre == null){
+            throw new InformationNotFoundException("Genre not found");
+        } else {
+            return Optional.of(genre);
         }
     }
 }
