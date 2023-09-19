@@ -29,7 +29,7 @@ public class GenreService {
     }
 
     public Optional<GenreModel> getGenre(Long genreId){
-        GenreModel genre = GenreRepository.findById(genreId);
+        GenreModel genre = genreRepository.findById(genreId);
         if(genre == null){
             throw new InformationNotFoundException("Genre not found");
         } else {
