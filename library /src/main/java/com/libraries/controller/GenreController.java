@@ -3,10 +3,7 @@ package com.libraries.controller;
 import com.libraries.model.GenreModel;
 import com.libraries.service.GenreService;
 import org.ietf.jgss.GSSName;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +24,11 @@ public class GenreController {
     @GetMapping(path = "/genres/{genreId}/") // => http://localhost:9096/api/genres/1/
     public Optional<GenreModel> getGenre(@PathVariable(value = "genreId") Long genreId){
         return genreService.getGenre(genreId);
+    }
+
+    @PostMapping(path = "/categories/") // => http://localhost:9096/api/genres/
+    public GenreModel createGenre(@RequestBody GenreModel genreObject){
+        return genreService.createGenre(genreObject);
     }
 
 }
