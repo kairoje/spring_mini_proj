@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -70,6 +71,16 @@ public class GenreService {
         }
     }
 
+    public BookModel createGenreBook(Long genreId, BookModel bookObject) {
+        try{
+            Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
+            bookObject.setGenre(genreOptional.get());
+            return bookRopsitory.save(bookObject);
+        } catch(NoSuchElementException e){
+            throw new InformationNotFoundException("Book in genre with id " + genreId + " not found.");
+        }
+    }
+
     public List<BookModel> getGenreBooks(Long genreId) {
         Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
         if(genreOptional.isPresent()){
@@ -78,4 +89,5 @@ public class GenreService {
             throw new InformationNotFoundException("Genre with id " + genreId + " not found");
         }
     }
+
 }
