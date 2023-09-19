@@ -26,7 +26,7 @@ public class GenreController {
         return genreService.getGenre(genreId);
     }
 
-    @PostMapping(path = "/categories/") // => http://localhost:9096/api/genres/
+    @PostMapping(path = "/genres/") // => http://localhost:9096/api/genres/
     public GenreModel createGenre(@RequestBody GenreModel genreObject){
         return genreService.createGenre(genreObject);
     }

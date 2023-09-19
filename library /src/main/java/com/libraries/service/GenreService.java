@@ -1,5 +1,6 @@
 package com.libraries.service;
 
+import com.libraries.exceptions.InformationExistException;
 import com.libraries.exceptions.InformationNotFoundException;
 import com.libraries.model.GenreModel;
 import com.libraries.repository.GenreRepository;
@@ -29,7 +30,7 @@ public class GenreService {
     }
 
     public Optional<GenreModel> getGenre(Long genreId){
-        GenreModel genre = GenreRepository.findById(genreId);
+        GenreModel genre = genreRepository.findById(genreId);
         if(genre == null){
             throw new InformationNotFoundException("Genre not found");
         } else {
@@ -40,7 +41,7 @@ public class GenreService {
     public GenreModel createGenre(GenreModel genreObject) {
         GenreModel genre = genreRepository.findByName(genreObject.getName());
         if(genre != null){
-            throw new InformationExistsException("Genre with name " + genreObject.getName() + " already exists.");
+            throw new InformationExistException("Genre with name " + genreObject.getName() + " already exists.");
         } else {
             return genreRepository.save(genreObject);
         }
