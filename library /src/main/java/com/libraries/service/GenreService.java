@@ -9,6 +9,7 @@ import com.libraries.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class GenreService {
 
     private GenreRepository genreRepository;
 
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
     public GenreService(BookRepository bookRepository) {
@@ -130,10 +131,10 @@ public class GenreService {
     }
 
 
-    public Optional<BookModel> deleteGenre(Long genreId, Long bookId) {
+    public Optional<Book> deleteGenre(Long genreId, Long bookId) {
         Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
         if (genreOptional.isPresent()){
-            Optional<BookModel> bookOptional = bookRepository.findById(bookId);
+            Optional<Book> bookOptional = bookRepository.findById(bookId);
             if (bookOptional.isPresent()){
                 bookRepository.deleteById(bookId);
                 return bookOptional;

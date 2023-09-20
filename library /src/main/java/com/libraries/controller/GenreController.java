@@ -3,7 +3,6 @@ package com.libraries.controller;
 import com.libraries.model.BookModel;
 import com.libraries.model.GenreModel;
 import com.libraries.service.GenreService;
-import org.ietf.jgss.GSSName;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Book;
@@ -64,7 +63,7 @@ public class GenreController {
     }
 
     @DeleteMapping(path = "/genres/{genreId}/books/{bookId}") // => http://localhost:9096/api/genres/{genreId}/books/{booksId}/
-    public Optional<BookModel> deleteGenreBook(@PathVariable(value = "genreId") Long genreId, @PathVariable(value = "bookId") Long bookId){
+    public Optional<Book> deleteGenreBook(@PathVariable(value = "genreId") Long genreId, @PathVariable(value = "bookId") Long bookId){
         return genreService.deleteGenre(genreId, bookId);
     }
 }

@@ -32,4 +32,12 @@ public class BookModel {
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private GenreModel genre;
+
+
+    public Object update(BookModel bookRequest) {
+        this.setTitle(bookRequest.getTitle());
+        this.setPages(bookRequest.getPages());
+        this.setAuthor(bookRequest.getAuthor());
+        return this;
+    }
 }
