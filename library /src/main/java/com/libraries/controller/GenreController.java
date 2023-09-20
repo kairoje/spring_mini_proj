@@ -27,6 +27,7 @@ public class GenreController {
     @GetMapping(path = "/genres/") // => http://localhost:9096/api/genres/
     public List<GenreModel> getGenres() { return genreService.getGenres(); }
 
+
     @GetMapping(path = "/genres/{genreId}/") // => http://localhost:9096/api/genres/{genreId}/
     public Optional<GenreModel> getGenre(@PathVariable(value = "genreId") Long genreId){
         return genreService.getGenre(genreId);
