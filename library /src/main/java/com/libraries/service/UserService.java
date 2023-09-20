@@ -1,5 +1,6 @@
 package com.libraries.service;
 
+import com.libraries.exceptions.InformationExistException;
 import com.libraries.model.UserModel;
 import com.libraries.repository.UserRepository;
 import com.libraries.security.JWTUtils;
@@ -29,7 +30,14 @@ public class UserService {
         this.authenticationManager = authenticationManager;
     }
 
-
+    public UserModel createUser(UserModel userObject){
+        if (!userRepository.existsByEmailAddress(userObject.getEmailAddress())){
+            userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
+            return userRepository.save(userObject);
+        } else {
+            throw new InformationExistException("user with email address " + userObject.getEmailAddress() + " already exists");
+        }
+    }
 
     public UserModel findUserByEmailAddress(String emailAddress) {
         return userRepository.findUserByEmailAddress(emailAddress);
