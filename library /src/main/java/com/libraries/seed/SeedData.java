@@ -22,6 +22,14 @@ public class SeedData implements CommandLineRunner {
 
     private final BookRepository bookRepository;
 
+    /**
+     * This method is used to seed data for a user
+     * @param passwordEncoder
+     * @param userRepository
+     * @param bookRepository
+     * @param genreRepository
+     * @return data for a user
+     */
     public SeedData(@Lazy PasswordEncoder passwordEncoder,
                     UserRepository userRepository,
                     BookRepository bookRepository,
