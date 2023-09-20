@@ -25,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(path = "/register/") // http://localhost:9092/auth/users/register/
+    @PostMapping(path = "/register/") // http://localhost:9096/auth/users/register/
     public UserModel createUser(@RequestBody UserModel userObject){
         return userService.createUser(userObject);
     }

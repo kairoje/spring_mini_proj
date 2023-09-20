@@ -1,0 +1,37 @@
+package com.libraries.seed;
+
+import com.libraries.model.UserModel;
+import com.libraries.repository.BookRepository;
+import com.libraries.repository.GenreRepository;
+import com.libraries.repository.UserRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+@Component
+public class SeedData implements CommandLineRunner {
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final UserRepository userRepository;
+
+    private  final GenreRepository genreRepository;
+
+    private final BookRepository bookRepository;
+
+    public SeedData(@Lazy PasswordEncoder passwordEncoder,
+                    UserRepository userRepository,
+                    BookRepository bookRepository,
+                    GenreRepository genreRepository){
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.genreRepository = genreRepository;
+        this.bookRepository = bookRepository;
+    }
+    @Override
+    public void run(String... args) throws Exception {
+
+
+    }
+}
