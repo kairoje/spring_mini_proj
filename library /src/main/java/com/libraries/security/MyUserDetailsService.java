@@ -1,5 +1,6 @@
 package com.libraries.security;
 
+import com.libraries.model.UserModel;
 import com.libraries.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -19,7 +20,7 @@ public class MyUserDetailsService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
-        User user = userService.findUserByEmailAddress(emailAddress);
+        UserModel user = userService.findUserByEmailAddress(emailAddress);
         return new MyUserDetails(user);
     }
 }

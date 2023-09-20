@@ -2,7 +2,6 @@ package com.libraries.security;
 
 import com.libraries.model.UserModel;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -12,7 +11,7 @@ public class MyUserDetails implements UserDetails {
 
     private final UserModel user;
 
-    public MyUserDetails(User user) {
+    public MyUserDetails(UserModel user) {
         this.user = user;
     }
 
