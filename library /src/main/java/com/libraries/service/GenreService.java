@@ -106,4 +106,20 @@ public class GenreService {
             throw new InformationNotFoundException("book with id " + bookId + " not found");
         }
     }
+
+    public BookModel updateGenreBook(Long genreId, Long bookId, BookModel book) {
+        Optional<GenreModel> genreOptional = genreRepository.findById(genreId);
+        if (genreOptional.isPresent()) {
+            Optional<BookModel> bookOptional = genreOptional.get().findBookById(bookId);
+            if (bookOptional.isPresent()) {
+                return bookRepository.save(bookOptional.get().update(book));
+            } else {
+                throw new InformationNotFoundException("Book with id " + bookId + " not found");
+            }
+        } else {
+            throw new InformationNotFoundException("Genre with id " + genreId + " not found");
+        }
+    }
+
+
 }
