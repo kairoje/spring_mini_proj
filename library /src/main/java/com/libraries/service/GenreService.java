@@ -7,7 +7,6 @@ import com.libraries.model.GenreModel;
 import com.libraries.model.UserModel;
 import com.libraries.repository.BookRepository;
 import com.libraries.repository.GenreRepository;
-
 import com.libraries.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,18 +39,18 @@ public class GenreService {
     }
 
     public List<GenreModel> getGenres(){
-        List<GenreModel> genreList = genreRepository.findAll();
-        if (genreList.isEmpty()){
-            throw new InformationNotFoundException("No genres found.");
+        List<GenreModel> categoryList = genreRepository.findByUserId(GenreService.getCurrentLoggedInUser().getId());
+        if (categoryList.isEmpty()){
+            throw new InformationNotFoundException("No genres found for user id " + GenreService.getCurrentLoggedInUser().getId());
         } else {
-            return genreRepository.findAll();
+            return categoryList;
         }
     }
 
     public Optional<GenreModel> getGenre(Long genreId){
         GenreModel genre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
         if(genre == null){
-            throw new InformationNotFoundException("category with id " + genreId + " not found");
+            throw new InformationNotFoundException("Genre with id " + genreId + " not found");
         } else {
             return Optional.of(genre);
         }
@@ -67,11 +66,12 @@ public class GenreService {
     }
 
     public GenreModel updateGenre(Long genreId, GenreModel genreObject) {
-        GenreModel genre = genreRepository.findById(genreId);
-        if(genre == null){
-            throw new InformationNotFoundException("Genre not found");
+        GenreModel category = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
+        // isPresent
+        if (category == null) {
+            throw new InformationNotFoundException("Genre " + genreId + " doesn't exists");
         } else {
-            GenreModel updateGenre = genreRepository.findById(genreId);
+            GenreModel updateGenre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
             updateGenre.setName(genreObject.getName());
             updateGenre.setDescription(genreObject.getDescription());
             return genreRepository.save(updateGenre);
@@ -79,22 +79,23 @@ public class GenreService {
     }
 
     public Optional<GenreModel> deleteGenre(Long genreId) {
-        GenreModel genre = genreRepository.findById(genreId);
-        if(genre != null){
-            genreRepository.deleteById(String.valueOf(genreId));
-            return Optional.of(genre);
-        } else {
-            throw new InformationNotFoundException("Genre with id " + genreId + " not found.");
+        GenreModel category = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
+        if(category != null){
+            genreRepository.deleteById(genreId);
+            return Optional.of(category);
+        }
+        else {
+            throw new InformationNotFoundException("Genre with id " + genreId + " not found");
         }
     }
 
     public BookModel createGenreBook(Long genreId, BookModel bookObject) {
         try{
-            Optional<GenreModel> genreOptional = genreRepository.findById(genreId);
+            Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId()));
             bookObject.setGenre(genreOptional.get());
             return bookRepository.save(bookObject);
         } catch(NoSuchElementException e){
-            throw new InformationNotFoundException("category with id " + genreId + " not found");
+            throw new InformationNotFoundException("category with id " + genreId + " not found"); //404 error
         }
     }
 

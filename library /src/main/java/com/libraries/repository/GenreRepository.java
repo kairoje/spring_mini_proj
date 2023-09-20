@@ -14,4 +14,8 @@ public interface GenreRepository extends JpaRepository<GenreModel, String>{
     GenreModel findByName(String genreName);
 
     GenreModel findByIdAndUserId(Long categoryId, Long userId);
+
+    List<GenreModel> findByUserId(Long id);
+
+    void deleteById(Long genreId);
 }
