@@ -122,4 +122,19 @@ public class GenreService {
     }
 
 
+    public Optional<BookModel> deleteGenre(Long genreId, Long bookId) {
+        Optional<GenreModel> genreOptional = genreRepository.findById(genreId);
+        if (genreOptional.isPresent()){
+            Optional<BookModel> bookOptional = bookRepository.findById(bookId);
+            if (bookOptional.isPresent()){
+                bookRepository.deleteById(bookId);
+                return bookOptional;
+            }
+            else {
+                throw new InformationNotFoundException("Book with id " + bookId + " not found");
+            }
+        } else {
+            throw new InformationNotFoundException("Genre with id " + genreId + " not found");
+        }
+    }
 }
