@@ -39,6 +39,10 @@ public class BookModel {
     private UserModel user;
 
 
+    /**
+     * Update method to update books when requested during put request
+     * @param bookRequest
+     */
     public void update(BookModel bookRequest) {
         this.setTitle(bookRequest.getTitle());
         this.setPages(bookRequest.getPages());
