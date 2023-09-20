@@ -2,9 +2,9 @@
 Mini project from Interapt Immersive Bootcamp with Spring framework.
 
 ## Technologies Used:
-IntelliJ \n
-Spring Initalizer \n
-Postman \n
+IntelliJ,
+Spring Initalizer,
+Postman
 
 
 ## ERD 
