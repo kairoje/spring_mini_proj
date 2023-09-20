@@ -100,6 +100,11 @@ public class GenreService {
         }
     }
 
+    /**
+     * Delete a genre per delete request
+     * @param genreId
+     * @return verification of deletion of genre
+     */
     public Optional<GenreModel> deleteGenre(Long genreId) {
         GenreModel genre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
         if(genre != null){
