@@ -1,5 +1,6 @@
 package com.libraries.seed;
 
+import com.libraries.model.BookModel;
 import com.libraries.model.GenreModel;
 import com.libraries.model.UserModel;
 import com.libraries.repository.BookRepository;
@@ -44,6 +45,13 @@ public class SeedData implements CommandLineRunner {
         genre.setDescription("Imagination");
         genre.setUser(user);
         genreRepository.save(genre);
+
+        BookModel book = new BookModel();
+        book.setTitle("The Alchemist");
+        book.setAuthor("Paulo Coelho");
+        book.setPages(100);
+        book.setUser(user);
+        bookRepository.save(book);
 
     }
 }
