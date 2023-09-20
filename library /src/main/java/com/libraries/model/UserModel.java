@@ -2,8 +2,6 @@ package com.libraries.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,6 +16,7 @@ import java.util.List;
 public class UserModel {
 
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -31,10 +30,11 @@ public class UserModel {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @OneToMany(mappedBy = "user")
+    private List<BookModel> bookList;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<GenreModel> genreList;
 
-    @OneToMany(mappedBy = "user")
-    private List<BookModel> bookList;
 
 }

@@ -3,18 +3,24 @@ package com.libraries.controller;
 import com.libraries.model.BookModel;
 import com.libraries.model.GenreModel;
 import com.libraries.service.GenreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/genres")
 public class GenreController {
 
-    private final GenreService genreService;
+    private GenreService genreService;
 
     public GenreController(GenreService genreService) {
+        this.genreService = genreService;
+    }
+
+    @Autowired
+    public void setGenreService(GenreService genreService) {
         this.genreService = genreService;
     }
 

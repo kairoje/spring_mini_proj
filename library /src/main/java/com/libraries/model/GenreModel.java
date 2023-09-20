@@ -33,15 +33,16 @@ public class GenreModel {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<BookModel> bookList;
 
-    public Optional<BookModel> findBookById(Long bookId){
-        return bookList.stream().filter((book)->book.getId().equals(bookId)).findFirst();
-
-    }
-
     @Getter
     @Setter
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private UserModel user;
+
+    public Optional<BookModel> findBookById(Long bookId){
+        return bookList.stream().filter((book)->book.getId().equals(bookId)).findFirst();
+
+    }
+
 }

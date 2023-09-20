@@ -10,15 +10,10 @@ import java.util.List;
 @Repository
 public interface GenreRepository extends JpaRepository<GenreModel, String>{
 
-    GenreModel findById(Long genreId);
-
     GenreModel findByName(String genreName);
 
     GenreModel findByIdAndUserId(Long categoryId, Long userId);
 
     List<GenreModel> findByUserId(Long id);
 
-    void deleteById(Long genreId);
-
-    BookModel update(BookModel book);
 }
