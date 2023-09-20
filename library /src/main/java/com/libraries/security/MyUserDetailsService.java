@@ -20,6 +20,6 @@ public class MyUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
         User user = userService.findUserByEmailAddress(emailAddress);
-        return (UserDetails) new MyUserDetails(user);
+        return new MyUserDetails(user);
     }
 }

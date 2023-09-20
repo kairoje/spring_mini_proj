@@ -3,20 +3,21 @@ package com.libraries.security;
 import com.libraries.model.UserModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
 
-public class MyUserDetails extends UserModel {
+public class MyUserDetails implements UserDetails {
 
-    private final User user;
+    private final UserModel user;
 
     public MyUserDetails(User user) {
         this.user = user;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<GrantedAuthority> getAuthorities() {
         return new HashSet<>();
     }
 
@@ -45,13 +46,12 @@ public class MyUserDetails extends UserModel {
         return true;
     }
 
-    // used for verification
     @Override
     public boolean isEnabled() {
         return true;
     }
 
-    public User getUser() {
+    public UserModel getUser() {
         return user;
     }
 }
