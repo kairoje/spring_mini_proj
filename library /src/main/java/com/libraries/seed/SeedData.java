@@ -1,5 +1,6 @@
 package com.libraries.seed;
 
+import com.libraries.model.GenreModel;
 import com.libraries.model.UserModel;
 import com.libraries.repository.BookRepository;
 import com.libraries.repository.GenreRepository;
@@ -37,6 +38,12 @@ public class SeedData implements CommandLineRunner {
         user.setEmailAddress("kaibooks@gmail.com");
         user.setPassword(passwordEncoder.encode("Books4U"));
         userRepository.save(user);
+
+        GenreModel genre = new GenreModel();
+        genre.setName("Fiction");
+        genre.setDescription("Imagination");
+        genre.setUser(user);
+        genreRepository.save(genre);
 
     }
 }
