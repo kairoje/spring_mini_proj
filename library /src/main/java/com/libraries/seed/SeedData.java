@@ -39,6 +39,12 @@ public class SeedData implements CommandLineRunner {
         this.genreRepository = genreRepository;
         this.bookRepository = bookRepository;
     }
+
+    /**
+     * The seed data for the user, the genre, and a book
+     * @param args
+     * @throws Exception
+     */
     @Override
     public void run(String... args) throws Exception {
 
