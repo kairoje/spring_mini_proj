@@ -40,6 +40,11 @@ public class GenreModel {
     @JsonIgnore
     private UserModel user;
 
+    /**
+     *This optional method is to find books by their id
+     * @param bookId
+     * @return an Optional that contains either the first book in bookList that has an ID equal to bookId or an empty Optional if book isn't found
+     */
     public Optional<BookModel> findBookById(Long bookId){
         return bookList.stream().filter((book)->book.getId().equals(bookId)).findFirst();
 
