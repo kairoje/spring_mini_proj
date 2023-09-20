@@ -33,11 +33,16 @@ public class BookModel {
     @JoinColumn(name = "genre_id")
     private GenreModel genre;
 
+    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JsonIgnore
+    private UserModel user;
 
-    public Object update(BookModel bookRequest) {
+
+    public void update(BookModel bookRequest) {
         this.setTitle(bookRequest.getTitle());
         this.setPages(bookRequest.getPages());
         this.setAuthor(bookRequest.getAuthor());
-        return this;
     }
+
 }

@@ -18,7 +18,6 @@ import java.util.List;
 public class UserModel {
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -32,16 +31,10 @@ public class UserModel {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<GenreModel> genreList;
 
     @OneToMany(mappedBy = "user")
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<BookModel> bookList;
-
-    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private List<BookModel> books;
 
 }
