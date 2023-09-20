@@ -24,8 +24,9 @@ public class GenreService {
     private BookRepository bookRepository;
 
     @Autowired
-    public GenreService(BookRepository bookRepository) {
+    public GenreService(GenreRepository genreRepository, BookRepository bookRepository) {
         this.bookRepository = bookRepository;
+        this.genreRepository = genreRepository;
     }
 
     @Autowired
@@ -39,11 +40,11 @@ public class GenreService {
     }
 
     public List<GenreModel> getGenres(){
-        List<GenreModel> categoryList = genreRepository.findByUserId(GenreService.getCurrentLoggedInUser().getId());
-        if (categoryList.isEmpty()){
+        List<GenreModel> genreList = genreRepository.findByUserId(GenreService.getCurrentLoggedInUser().getId());
+        if (genreList.isEmpty()){
             throw new InformationNotFoundException("No genres found for user id " + GenreService.getCurrentLoggedInUser().getId());
         } else {
-            return categoryList;
+            return genreList;
         }
     }
 
@@ -57,7 +58,8 @@ public class GenreService {
     }
 
     public GenreModel createGenre(GenreModel genreObject) {
-        GenreModel genre = genreRepository.findByName(genreObject.getName());
+        String name = genreObject.getName();
+        GenreModel genre = genreRepository.findByName(name);
         if(genre != null){
             throw new InformationExistException("Genre with name " + genreObject.getName() + " already exists.");
         } else {
@@ -66,9 +68,8 @@ public class GenreService {
     }
 
     public GenreModel updateGenre(Long genreId, GenreModel genreObject) {
-        GenreModel category = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
-        // isPresent
-        if (category == null) {
+        GenreModel genre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
+        if (genre == null) {
             throw new InformationNotFoundException("Genre " + genreId + " doesn't exists");
         } else {
             GenreModel updateGenre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
@@ -79,10 +80,10 @@ public class GenreService {
     }
 
     public Optional<GenreModel> deleteGenre(Long genreId) {
-        GenreModel category = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
-        if(category != null){
+        GenreModel genre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
+        if(genre != null){
             genreRepository.deleteById(genreId);
-            return Optional.of(category);
+            return Optional.of(genre);
         }
         else {
             throw new InformationNotFoundException("Genre with id " + genreId + " not found");
@@ -95,7 +96,7 @@ public class GenreService {
             bookObject.setGenre(genreOptional.get());
             return bookRepository.save(bookObject);
         } catch(NoSuchElementException e){
-            throw new InformationNotFoundException("category with id " + genreId + " not found"); //404 error
+            throw new InformationNotFoundException("Genre with id " + genreId + " not found"); //404 error
         }
     }
 
@@ -117,22 +118,22 @@ public class GenreService {
                 return bookOptional.get();
             }
             else {
-                throw new InformationNotFoundException("book with id " + bookId + " not found");
+                throw new InformationNotFoundException("Book with id " + bookId + " not found");
             }
         }
         else {
-            throw new InformationNotFoundException("book with id " + bookId + " not found");
+            throw new InformationNotFoundException("Book with id " + bookId + " not found");
         }
     }
 
     public BookModel updateGenreBook(Long genreId, Long bookId, BookModel book) {
         Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId()));
-        if (genreOptional.isPresent()) {
+        if(genreOptional.isPresent()){
             Optional<BookModel> bookOptional = genreOptional.get().findBookById(bookId);
-            if (bookOptional.isPresent()) {
-                return bookRepository.save(bookOptional.get().update(book));
+            if(bookOptional.isPresent()){
+                return bookRepository.save(genreRepository.update(book));
             } else {
-                throw new InformationNotFoundException("Book with id " + bookId + " not found");
+                throw new InformationNotFoundException("Book with id " + bookId + " not found.");
             }
         } else {
             throw new InformationNotFoundException("Genre with id " + genreId + " not found");
