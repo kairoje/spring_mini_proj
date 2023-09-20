@@ -35,6 +35,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         this.jwtUtils = jwtUtils;
     }
 
+    /**
+     * A request for jwt token authorization
+     * @param request
+     * @return the jwt token with bearer auth
+     */
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
         if (StringUtils.hasLength(headerAuth) && headerAuth.startsWith("Bearer")) {
@@ -44,6 +49,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         return null;
     }
 
+    /**
+     * Username and password authentication by http request, with fail-safe for exceptions
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
