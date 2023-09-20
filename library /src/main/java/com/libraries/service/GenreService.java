@@ -31,11 +31,19 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
+    /**
+     * Gets the current logged-in user
+     * @return the user details based on current logged-in user
+     */
     public static UserModel getCurrentLoggedInUser(){
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDetails.getUser();
     }
 
+    /**
+     * Get a list of genres per get request
+     * @return the list of genres
+     */
     public List<GenreModel> getGenres(){
         List<GenreModel> genreList = genreRepository.findByUserId(GenreService.getCurrentLoggedInUser().getId());
         if (genreList.isEmpty()){
@@ -45,6 +53,11 @@ public class GenreService {
         }
     }
 
+    /**
+     * Optional retrival of genre through get request
+     * @param genreId
+     * @return optional genre entry
+     */
     public Optional<GenreModel> getGenre(Long genreId){
         GenreModel genre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
         if(genre == null){
@@ -54,6 +67,11 @@ public class GenreService {
         }
     }
 
+    /**
+     * Creates a genre object with post request
+     * @param genreObject
+     * @return the saved genre object
+     */
     public GenreModel createGenre(GenreModel genreObject) {
         String name = genreObject.getName();
         GenreModel genre = genreRepository.findByName(name);
@@ -64,6 +82,12 @@ public class GenreService {
         }
     }
 
+    /**
+     * Updates the genre per put request
+     * @param genreId
+     * @param genreObject
+     * @return updated genre object
+     */
     public GenreModel updateGenre(Long genreId, GenreModel genreObject) {
         GenreModel genre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
         if (genre == null) {
