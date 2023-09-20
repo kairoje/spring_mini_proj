@@ -32,6 +32,11 @@ public class SeedData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        UserModel user = new UserModel();
+        user.setUserName("KaiLibrary");
+        user.setEmailAddress("kaibooks@gmail.com");
+        user.setPassword(passwordEncoder.encode("Books4U"));
+        userRepository.save(user);
 
     }
 }
