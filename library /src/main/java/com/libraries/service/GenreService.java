@@ -4,6 +4,7 @@ import com.libraries.exceptions.InformationExistException;
 import com.libraries.exceptions.InformationNotFoundException;
 import com.libraries.model.BookModel;
 import com.libraries.model.GenreModel;
+import com.libraries.repository.BookRepository;
 import com.libraries.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,13 @@ import java.util.Optional;
 public class GenreService {
 
     private GenreRepository genreRepository;
+
+    private BookRepository bookRepository;
+
+    @Autowired
+    public GenreService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     @Autowired
     public void setGenreRepository(GenreRepository genreRepository) {
@@ -75,7 +83,7 @@ public class GenreService {
         try{
             Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
             bookObject.setGenre(genreOptional.get());
-            return bookRopsitory.save(bookObject);
+            return bookRepository.save(bookObject);
         } catch(NoSuchElementException e){
             throw new InformationNotFoundException("Book in genre with id " + genreId + " not found.");
         }
@@ -92,7 +100,7 @@ public class GenreService {
 
 
     public BookModel getGenreBook(Long genreId, Long bookId) {
-        Optional<GenreModel> genreOptional = genreRepository.findById(genreId);
+        Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
         if (genreOptional.isPresent()) {
             Optional<BookModel> bookOptional = genreOptional.get().findBookById(bookId);
             if (bookOptional.isPresent()){
@@ -108,7 +116,7 @@ public class GenreService {
     }
 
     public BookModel updateGenreBook(Long genreId, Long bookId, BookModel book) {
-        Optional<GenreModel> genreOptional = genreRepository.findById(genreId);
+        Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
         if (genreOptional.isPresent()) {
             Optional<BookModel> bookOptional = genreOptional.get().findBookById(bookId);
             if (bookOptional.isPresent()) {
@@ -123,7 +131,7 @@ public class GenreService {
 
 
     public Optional<BookModel> deleteGenre(Long genreId, Long bookId) {
-        Optional<GenreModel> genreOptional = genreRepository.findById(genreId);
+        Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
         if (genreOptional.isPresent()){
             Optional<BookModel> bookOptional = bookRepository.findById(bookId);
             if (bookOptional.isPresent()){
