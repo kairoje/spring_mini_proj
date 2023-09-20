@@ -126,7 +126,7 @@ public class GenreService {
     }
 
     public BookModel updateGenreBook(Long genreId, Long bookId, BookModel book) {
-        Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
+        Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId()));
         if (genreOptional.isPresent()) {
             Optional<BookModel> bookOptional = genreOptional.get().findBookById(bookId);
             if (bookOptional.isPresent()) {

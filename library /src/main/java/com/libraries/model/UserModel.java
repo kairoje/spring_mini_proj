@@ -40,4 +40,8 @@ public class UserModel {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<BookModel> bookList;
 
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private List<BookModel> books;
+
 }
