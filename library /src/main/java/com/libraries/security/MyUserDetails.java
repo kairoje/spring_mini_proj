@@ -2,16 +2,16 @@ package com.libraries.security;
 
 import com.libraries.model.UserModel;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 public class MyUserDetails extends UserModel {
 
-    private final UserModel user;
+    private final User user;
 
-    public MyUserDetails(UserModel user) {
+    public MyUserDetails(User user) {
         this.user = user;
     }
 
@@ -51,7 +51,7 @@ public class MyUserDetails extends UserModel {
         return true;
     }
 
-    public UserModel getUser() {
+    public User getUser() {
         return user;
     }
 }

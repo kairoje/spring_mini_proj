@@ -16,4 +16,6 @@ public class JWTUtils {
     @Value("${jwt-expiration-ms}")
     private String jwtExpirationMs;
 
+    public String getUserNameFromJwtToken(String jwt) {
+    }
 }
