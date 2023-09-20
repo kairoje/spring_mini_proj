@@ -116,6 +116,12 @@ public class GenreService {
         }
     }
 
+    /**
+     * Creating an individual book per post request
+     * @param genreId
+     * @param bookObject
+     * @return a saved book entry
+     */
     public BookModel createGenreBook(Long genreId, BookModel bookObject) {
         try{
             Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId()));
@@ -126,6 +132,12 @@ public class GenreService {
         }
     }
 
+
+    /**
+     * Get a list of books per get request
+     * @param genreId
+     * @return the optional book list
+     */
     public List<BookModel> getGenreBooks(Long genreId) {
         Optional<GenreModel> genreOptional = genreRepository.findById(String.valueOf(genreId));
         if(genreOptional.isPresent()){
@@ -136,6 +148,12 @@ public class GenreService {
     }
 
 
+    /**
+     * Get an individual book per get request
+     * @param genreId
+     * @param bookId
+     * @return
+     */
     public BookModel getGenreBook(Long genreId, Long bookId) {
         Optional<GenreModel> genreOptional = genreRepository.findById(String.valueOf(genreId));
         if (genreOptional.isPresent()) {
@@ -152,6 +170,13 @@ public class GenreService {
         }
     }
 
+    /**
+     * Update an individual book per post request
+     * @param genreId
+     * @param bookId
+     * @param bookObject
+     * @return the updated book entry
+     */
     public BookModel updateGenreBook(Long genreId, Long bookId, BookModel bookObject) {
         GenreModel genre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
         if(genre == null) {
@@ -166,12 +191,18 @@ public class GenreService {
                 updateBook.setAuthor(bookObject.getAuthor());
                 return bookRepository.save(updateBook);
             } else {
-                throw new InformationNotFoundException("Book with id " + bookObject + " not found in genre " + genreId);
+                throw new InformationNotFoundException("Book with id " + bookId + " not found in genre " + genreId);
             }
         }
     }
 
 
+    /**
+     * Delete a book entry per delete request
+     * @param genreId
+     * @param bookId
+     * @return verification of deletion of book entry
+     */
     public Optional<BookModel> deleteGenre(Long genreId, Long bookId) {
         Optional<GenreModel> genreOptional = genreRepository.findById(String.valueOf(genreId));
         if (genreOptional.isPresent()){
