@@ -24,4 +24,4 @@ As a user who has selected a category, I want to see a list of books available i
 As a user interested in a particular book, I want to view detailed information about a specific book (e.g., title, author, description).
 
 ## Planning and Troubleshooting
-I started off my project with laying out the erd and setting up user stories. I then started with one model, just to get everything set up in crud. My endpoints were working but I ended up dealinf with authorization issues throughout.
+I started off my project with laying out the erd and setting up user stories. I then started with one model, just to get everything set up in crud. My endpoints were working but I ended up dealing with authorization issues throughout.
