@@ -37,6 +37,11 @@ public class UserService {
         this.authenticationManager = authenticationManager;
     }
 
+    /**
+     * Creation and verification of the user object via email address
+     * @param userObject
+     * @return the new user object or exception if user email already is in the db
+     */
     public UserModel createUser(UserModel userObject){
         if (!userRepository.existsByEmailAddress(userObject.getEmailAddress())){
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
@@ -46,6 +51,11 @@ public class UserService {
         }
     }
 
+    /**
+     * A request to log in the user via authentication token
+     * @param loginRequest
+     * @return jwt token authentication
+     */
     public Optional<String> loginUser(LoginRequest loginRequest){
         UsernamePasswordAuthenticationToken authenticationToken = new
                 UsernamePasswordAuthenticationToken(loginRequest.getEmailAddress(), loginRequest.getPassword());
@@ -59,6 +69,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Find a user by their email within db
+     * @param emailAddress
+     * @return the user if in the db
+     */
     public UserModel findUserByEmailAddress(String emailAddress) {
         return userRepository.findUserByEmailAddress(emailAddress);
     }
