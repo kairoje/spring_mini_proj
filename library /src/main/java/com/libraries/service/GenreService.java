@@ -6,7 +6,9 @@ import com.libraries.model.BookModel;
 import com.libraries.model.GenreModel;
 import com.libraries.repository.BookRepository;
 import com.libraries.repository.GenreRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,9 +42,9 @@ public class GenreService {
     }
 
     public Optional<GenreModel> getGenre(Long genreId){
-        GenreModel genre = genreRepository.findById(genreId);
+        GenreModel genre = genreRepository.findByIdAndUserId(genreId, genreService.getCurrentLoggedInUser().getId());
         if(genre == null){
-            throw new InformationNotFoundException("Genre not found");
+            throw new InformationNotFoundException("category with id " + categoryId + " not found");
         } else {
             return Optional.of(genre);
         }
@@ -81,11 +83,11 @@ public class GenreService {
 
     public BookModel createGenreBook(Long genreId, BookModel bookObject) {
         try{
-            Optional<GenreModel> genreOptional = Optional.ofNullable(genreRepository.findById(genreId));
+            Optional<GenreModel> genreOptional = genreRepository.findById(genreId);
             bookObject.setGenre(genreOptional.get());
             return bookRepository.save(bookObject);
         } catch(NoSuchElementException e){
-            throw new InformationNotFoundException("Book in genre with id " + genreId + " not found.");
+            throw new InformationNotFoundException("category with id " + genreId + " not found");
         }
     }
 

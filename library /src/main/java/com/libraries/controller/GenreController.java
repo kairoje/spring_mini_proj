@@ -63,7 +63,7 @@ public class GenreController {
     }
 
     @DeleteMapping(path = "/genres/{genreId}/books/{bookId}") // => http://localhost:9096/api/genres/{genreId}/books/{booksId}/
-    public Optional<Book> deleteGenreBook(@PathVariable(value = "genreId") Long genreId, @PathVariable(value = "bookId") Long bookId){
+    public Optional<BookModel> deleteGenreBook(@PathVariable(value = "genreId") Long genreId, @PathVariable(value = "bookId") Long bookId){
         return genreService.deleteGenre(genreId, bookId);
     }
 }

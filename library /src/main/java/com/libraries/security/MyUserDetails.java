@@ -1,19 +1,14 @@
 package com.libraries.security;
 
 import com.libraries.model.UserModel;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
 
-public class MyUserDetails implements UserDetails {
-
-    private final UserModel user;
-
-    public MyUserDetails(UserModel user) {
-        this.user = user;
-    }
+public record MyUserDetails(UserModel user) implements UserDetails {
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
@@ -50,7 +45,4 @@ public class MyUserDetails implements UserDetails {
         return true;
     }
 
-    public UserModel getUser() {
-        return user;
-    }
 }
