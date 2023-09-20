@@ -1,5 +1,6 @@
 package com.libraries.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -37,4 +38,11 @@ public class GenreModel {
         return bookList.stream().filter((book)->book.getId().equals(bookId)).findFirst();
 
     }
+
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private UserModel user;
 }
