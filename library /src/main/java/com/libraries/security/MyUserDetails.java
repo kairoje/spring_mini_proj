@@ -45,4 +45,7 @@ public record MyUserDetails(UserModel user) implements UserDetails {
         return true;
     }
 
+    public UserModel getUser() {
+        return user;
+    }
 }

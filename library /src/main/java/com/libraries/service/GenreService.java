@@ -4,9 +4,11 @@ import com.libraries.exceptions.InformationExistException;
 import com.libraries.exceptions.InformationNotFoundException;
 import com.libraries.model.BookModel;
 import com.libraries.model.GenreModel;
+import com.libraries.model.UserModel;
 import com.libraries.repository.BookRepository;
 import com.libraries.repository.GenreRepository;
 
+import com.libraries.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,11 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
+    public static UserModel getCurrentLoggedInUser(){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // principal is entire user object
+        return userDetails.getUser();
+    }
+
     public List<GenreModel> getGenres(){
         List<GenreModel> genreList = genreRepository.findAll();
         if (genreList.isEmpty()){
@@ -42,9 +49,9 @@ public class GenreService {
     }
 
     public Optional<GenreModel> getGenre(Long genreId){
-        GenreModel genre = genreRepository.findByIdAndUserId(genreId, genreService.getCurrentLoggedInUser().getId());
+        GenreModel genre = genreRepository.findByIdAndUserId(genreId, GenreService.getCurrentLoggedInUser().getId());
         if(genre == null){
-            throw new InformationNotFoundException("category with id " + categoryId + " not found");
+            throw new InformationNotFoundException("category with id " + genreId + " not found");
         } else {
             return Optional.of(genre);
         }
